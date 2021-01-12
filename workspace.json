@@ -1,8 +1,113 @@
 {
   "version": 2,
-
-  "projects": {},
+  "projects": {
+    "ui-components": {
+      "projectType": "library",
+      "generators": {
+        "@nxext/stencil:component": {
+          "style": "scss",
+          "storybook": true
+        }
+      },
+      "root": "libs/ui-components",
+      "sourceRoot": "libs/ui-components/src",
+      "targets": {
+        "test": {
+          "executor": "@nxext/stencil:test",
+          "options": {
+            "projectType": "library",
+            "configPath": "libs/ui-components/stencil.config.ts"
+          }
+        },
+        "e2e": {
+          "executor": "@nxext/stencil:e2e",
+          "options": {
+            "projectType": "library",
+            "configPath": "libs/ui-components/stencil.config.ts"
+          }
+        },
+        "build": {
+          "executor": "@nxext/stencil:build",
+          "options": {
+            "projectType": "library",
+            "configPath": "libs/ui-components/stencil.config.ts"
+          }
+        },
+        "serve": {
+          "executor": "@nxext/stencil:build",
+          "options": {
+            "projectType": "library",
+            "configPath": "libs/ui-components/stencil.config.ts",
+            "serve": true,
+            "watch": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/html",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/ui-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/html",
+            "outputPath": "dist/storybook/ui-components",
+            "config": {
+              "configFolder": "libs/ui-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "ui-components-e2e": {
+      "root": "apps/ui-components-e2e",
+      "sourceRoot": "apps/ui-components-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ui-components-e2e/cypress.json",
+            "tsConfig": "apps/ui-components-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ui-components:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "ui-components:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ui-components-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ui-components-e2e/**/*"
+            ]
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nxext/stencil"
   }
 }

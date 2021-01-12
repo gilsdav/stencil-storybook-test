@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@test-new-uikits/ui-components": ["libs/ui-components/src/index.ts"],
+      "@test-new-uikits/ui-components/loader": [
+        "dist/libs/ui-components/loader"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
